@@ -3,711 +3,494 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroGen AI - Advanced Media Creation</title>
+    <meta name="description" content="Create stunning AI-generated images and videos with our powerful tools. Transform text to images or animate pictures into videos effortlessly.">
+    <meta name="keywords" content="AI image generator, text to image, image to video, AI art, AI video creator">
+    <title>AI Studio Pro | Generate Images & Videos with AI</title>
     <style>
         :root {
-            --primary: #6e48aa;
-            --secondary: #9d50bb;
-            --dark: #1a1a2e;
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
             --light: #f8f9fa;
-            --accent: #41b8d5;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--dark);
-            color: var(--light);
-            margin: 0;
-            padding: 0;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 0 20px;
         }
         
         header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            padding: 20px 0;
         }
         
         .logo {
-            font-size: 2rem;
+            font-size: 24px;
             font-weight: 700;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .mode-toggle {
-            background: rgba(255,255,255,0.1);
-            border: none;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
+            color: var(--primary);
+            text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 10px;
         }
         
-        .generator-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-        
-        .generator-box {
-            background: rgba(255,255,255,0.05);
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-        
-        .generator-box:hover {
-            transform: translateY(-5px);
-        }
-        
-        .generator-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .generator-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        
-        .generator-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        
-        .prompt-area {
-            width: 100%;
-            min-height: 150px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            padding: 1rem;
-            color: white;
-            font-size: 1rem;
-            resize: vertical;
-            margin-bottom: 1rem;
-        }
-        
-        .prompt-area:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-        
-        .settings-panel {
-            background: rgba(255,255,255,0.08);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .settings-title {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 0.5rem;
-        }
-        
-        .settings-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
-        
-        .setting-item {
-            margin-bottom: 0.5rem;
-        }
-        
-        .setting-label {
-            display: block;
-            font-size: 0.8rem;
-            margin-bottom: 0.3rem;
-            opacity: 0.7;
-        }
-        
-        .setting-input {
-            width: 100%;
-            padding: 0.5rem;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 5px;
             color: white;
         }
         
-        .generate-btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .generate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(110, 72, 170, 0.4);
-        }
-        
-        .output-area {
-            margin-top: 1.5rem;
-            min-height: 300px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 10px;
+        .nav-links {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+            gap: 25px;
         }
         
-        .output-placeholder {
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .cta-button {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--secondary);
+        }
+        
+        .hero {
+            padding: 80px 0;
             text-align: center;
-            padding: 2rem;
-            opacity: 0.6;
         }
         
-        .output-image {
-            max-width: 100%;
-            max-height: 500px;
-            border-radius: 5px;
-            display: none;
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--dark);
         }
         
-        .output-video {
-            max-width: 100%;
-            max-height: 500px;
-            border-radius: 5px;
-            display: none;
+        .hero p {
+            font-size: 20px;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
         }
         
-        .loading {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: none;
-            flex-direction: column;
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .tool-image {
+            height: 200px;
+            background-color: #f1f3f5;
+            display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--primary);
         }
         
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: var(--accent);
-            animation: spin 1s ease-in-out infinite;
-            margin-bottom: 1rem;
+        .tool-content {
+            padding: 25px;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .tool-content h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--dark);
         }
         
-        .advanced-toggle {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--accent);
-            font-size: 0.9rem;
-            cursor: pointer;
-            margin-bottom: 1rem;
+        .tool-content p {
+            color: var(--gray);
+            margin-bottom: 20px;
         }
         
-        .advanced-settings {
-            display: none;
-            background: rgba(0,0,0,0.2);
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
+        .tool-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
         }
         
-        .history-panel {
-            margin-top: 3rem;
+        .tool-button:hover {
+            background-color: var(--secondary);
         }
         
-        .history-title {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .features {
+            padding: 80px 0;
+            background-color: #f8f9fa;
         }
         
-        .history-grid {
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
         }
         
-        .history-item {
-            background: rgba(255,255,255,0.05);
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s ease;
+        .feature-item {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
         }
         
-        .history-item:hover {
-            transform: scale(1.03);
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 24px;
         }
         
-        .history-thumbnail {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
+        .feature-item h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--dark);
         }
         
-        .history-prompt {
-            padding: 0.5rem;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .feature-item p {
+            color: var(--gray);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #adb5bd;
+            font-size: 14px;
         }
         
         @media (max-width: 768px) {
-            .generator-container {
-                grid-template-columns: 1fr;
+            nav {
+                flex-direction: column;
+                gap: 20px;
             }
             
-            .settings-grid {
-                grid-template-columns: 1fr 1fr;
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">NeuroGen AI</div>
-            <button class="mode-toggle">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-                Light Mode
-            </button>
-        </header>
-        
-        <div class="generator-container">
-            <!-- Text to Image Generator -->
-            <div class="generator-box">
-                <div class="generator-header">
-                    <div class="generator-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
-                    </div>
-                    <div class="generator-title">Text to Image</div>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">AI</div>
+                    AI Studio Pro
+                </a>
+                
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#tools">Tools</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="blog.html">Blog</a>
                 </div>
                 
-                <textarea class="prompt-area" placeholder="Describe the image you want to generate... Example: 'A futuristic cityscape at sunset with flying cars and neon lights, ultra detailed, 8k resolution, cinematic lighting'"></textarea>
-                
-                <div class="settings-panel">
-                    <div class="settings-title">IMAGE SETTINGS</div>
-                    <div class="settings-grid">
-                        <div class="setting-item">
-                            <label class="setting-label">Style</label>
-                            <select class="setting-input">
-                                <option>Realistic</option>
-                                <option>Digital Art</option>
-                                <option>Painting</option>
-                                <option>Anime</option>
-                                <option>Cyberpunk</option>
-                                <option>Fantasy</option>
-                                <option>Minimalist</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label class="setting-label">Resolution</label>
-                            <select class="setting-input">
-                                <option>1024x1024</option>
-                                <option>768x1024</option>
-                                <option>1024x768</option>
-                                <option>512x512</option>
-                                <option>2048x2048</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label class="setting-label">Quality</label>
-                            <select class="setting-input">
-                                <option>Standard</option>
-                                <option>High</option>
-                                <option>Ultra</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="advanced-toggle">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                    Advanced Settings
-                </div>
-                
-                <div class="advanced-settings">
-                    <div class="settings-grid">
-                        <div class="setting-item">
-                            <label class="setting-label">Creativity</label>
-                            <input type="range" class="setting-input" min="0" max="100" value="70">
-                        </div>
-                        <div class="setting-item">
-                            <label class="setting-label">Seed</label>
-                            <input type="number" class="setting-input" placeholder="Random">
-                        </div>
-                        <div class="setting-item">
-                            <label class="setting-label">Steps</label>
-                            <input type="number" class="setting-input" value="50" min="20" max="150">
-                        </div>
-                        <div class="setting-item">
-                            <label class="setting-label">CFG Scale</label>
-                            <input type="number" class="setting-input" value="7" min="1" max="20">
-                        </div>
-                        <div class="setting-item">
-                            <label class="setting-label">Sampler</label>
-                            <select class="setting-input">
-                                <option>Euler a</option>
-                                <option>DPM++ 2M Karras</option>
-                                <option>DDIM</option>
-                                <option>LMS</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label class="setting-label">Model</label>
-                            <select class="setting-input">
-                                <option>NeuroGen v5.2</option>
-                                <option>Stable Diffusion XL</option>
-                                <option>Kandinsky 3.0</option>
-                                <option>DeepFloyd IF</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <button class="generate-btn">Generate Image</button>
-                
-                <div class="output-area">
-                    <div class="output-placeholder">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
-                        <p>Your generated image will appear here</p>
-                    </div>
-                    <img class="output-image" alt="Generated image">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <p>Generating your image...</p>
-                        <p class="progress-text">Initializing model (0%)</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Image to Video Generator -->
-            <div class="generator-box">
-                <div class="generator-header">
-                    <div class="generator-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                        </svg>
-                    </div>
-                    <div class="generator-title">Image to Video</div>
-                </div>
-                
-                <textarea class="prompt-area" placeholder="Describe the video you want to generate or leave blank for automatic interpretation... Example: 'The city comes to life with flying cars moving between buildings, camera slowly zooming out to reveal the entire metropolis'"></textarea>
-                
-                <div class="output-area" id="upload-area" style="min-height: 150px; margin-bottom: 1rem;">
-                    <div class="output-placeholder">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="17 8 12 3 7 8"></polyline>
-                            <line x1="12" y1="3" x2="12" y2="15"></line>
-                        </svg>
-                        <p>Drag & drop an image here or click to upload</p>
-                        <input type="file" id="image-upload" accept="image/*" style="display: none;">
-                    </div>
-                    <img id="uploaded-image" class="output-image" alt="Uploaded image" style="max-height: 300px;">
-                </div>
-                
-                <div class="settings-panel">
-                    <div class="settings-title">VIDEO SETTINGS</div>
-                    <div class="settings-grid">
-                        <div class="setting-item">
-                            <label class="setting-label">Duration</label>
-                            <select class="setting-input">
-                                <option>3 seconds</option>
-                                <option>5 seconds</option>
-                                <option>10 seconds</option>
-                                <option>15 seconds</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label class="setting-label">Resolution</label>
-                            <select class="setting-input">
-                                <option>1024x576</option>
-                                <option>1280x720</option>
-                                <option>1920x1080</option>
-                                <option>512x512</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label class="setting-label">FPS</label>
-                            <select class="setting-input">
-                                <option>24</option>
-                                <option>30</option>
-                                <option>60</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="advanced-toggle">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                    Advanced Settings
-                </div>
-                
-                <div class="advanced-settings">
-                    <div class="settings-grid">
-                        <div class="setting-item">
-                            <label class="setting-label">Motion Intensity</label>
-                            <input type="range" class="setting-input" min="0" max="100" value="50">
-                        </div>
-                        <div class="setting-item">
-                            <label class="setting-label">Seed</label>
-                            <input type="number" class="setting-input" placeholder="Random">
-                        </div>
-                        <div class="setting-item">
-                            <label class="setting-label">Camera Motion</label>
-                            <select class="setting-input">
-                                <option>Automatic</option>
-                                <option>Zoom In</option>
-                                <option>Zoom Out</option>
-                                <option>Pan Left</option>
-                                <option>Pan Right</option>
-                                <option>Static</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label class="setting-label">Model</label>
-                            <select class="setting-input">
-                                <option>NeuroMotion v3.1</option>
-                                <option>AnimateDiff</option>
-                                <option>Stable Video</option>
-                                <option>Gen-2</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <button class="generate-btn">Generate Video</button>
-                
-                <div class="output-area">
-                    <div class="output-placeholder">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5">
-                            <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                        </svg>
-                        <p>Your generated video will appear here</p>
-                    </div>
-                    <video class="output-video" controls style="display: none;"></video>
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <p>Generating your video...</p>
-                        <p class="progress-text">Initializing model (0%)</p>
-                    </div>
-                </div>
-            </div>
+                <a href="signup.html" class="cta-button">Get Started</a>
+            </nav>
         </div>
-        
-        <div class="history-panel">
-            <div class="history-title">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                Generation History
-            </div>
-            <div class="history-grid">
-                <!-- History items would be dynamically added here -->
-            </div>
-        </div>
-    </div>
+    </header>
     
-    <script>
-        // Toggle advanced settings
-        document.querySelectorAll('.advanced-toggle').forEach(toggle => {
-            toggle.addEventListener('click', () => {
-                const settings = toggle.nextElementSibling;
-                const icon = toggle.querySelector('svg');
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Create Stunning AI Art & Videos</h1>
+                <p>Transform your ideas into visual masterpieces with our powerful AI generation tools. No design skills required.</p>
+                <a href="#tools" class="cta-button">Explore Tools</a>
+            </div>
+        </section>
+        
+        <section class="container" id="tools">
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-image">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Text to Image</h3>
+                        <p>Generate high-quality images from text descriptions. Perfect for concept art, illustrations, and design projects.</p>
+                        <a href="text-to-image.html" class="tool-button">Try Now</a>
+                    </div>
+                </div>
                 
-                if (settings.style.display === 'block') {
-                    settings.style.display = 'none';
-                    icon.style.transform = 'rotate(0deg)';
-                } else {
-                    settings.style.display = 'block';
-                    icon.style.transform = 'rotate(180deg)';
-                }
-            });
-        });
-        
-        // Image upload handling
-        const uploadArea = document.getElementById('upload-area');
-        const imageUpload = document.getElementById('image-upload');
-        const uploadedImage = document.getElementById('uploaded-image');
-        
-        uploadArea.addEventListener('click', () => {
-            imageUpload.click();
-        });
-        
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.style.borderColor = '#41b8d5';
-        });
-        
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.style.borderColor = 'rgba(255,255,255,0.1)';
-        });
-        
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.style.borderColor = 'rgba(255,255,255,0.1)';
-            
-            if (e.dataTransfer.files.length) {
-                handleImageUpload(e.dataTransfer.files[0]);
-            }
-        });
-        
-        imageUpload.addEventListener('change', () => {
-            if (imageUpload.files.length) {
-                handleImageUpload(imageUpload.files[0]);
-            }
-        });
-        
-        function handleImageUpload(file) {
-            if (!file.type.match('image.*')) {
-                alert('Please upload an image file');
-                return;
-            }
-            
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                uploadedImage.src = e.target.result;
-                uploadedImage.style.display = 'block';
-                uploadArea.querySelector('.output-placeholder').style.display = 'none';
-            };
-            reader.readAsDataURL(file);
-        }
-        
-        // Simulate generation process
-        document.querySelectorAll('.generate-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const outputArea = btn.closest('.generator-box').querySelector('.output-area');
-                const placeholder = outputArea.querySelector('.output-placeholder');
-                const loading = outputArea.querySelector('.loading');
-                const outputMedia = outputArea.querySelector('.output-image, .output-video');
+                <div class="tool-card">
+                    <div class="tool-image">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                        </svg>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Image to Video</h3>
+                        <p>Bring your static images to life by transforming them into animated videos with realistic motion effects.</p>
+                        <a href="image-to-video.html" class="tool-button">Try Now</a>
+                    </div>
+                </div>
                 
-                // Show loading state
-                placeholder.style.display = 'none';
-                if (outputMedia) outputMedia.style.display = 'none';
-                loading.style.display = 'flex';
+                <div class="tool-card">
+                    <div class="tool-image">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path>
+                            <path d="M8.5 8.5v.01"></path>
+                            <path d="M16 15.5v.01"></path>
+                            <path d="M12 12v.01"></path>
+                            <path d="M11 17v.01"></path>
+                            <path d="M7 14v.01"></path>
+                        </svg>
+                    </div>
+                    <div class="tool-content">
+                        <h3>AI Art Studio</h3>
+                        <p>Advanced tools for creating and editing AI-generated artwork with fine-grained control over styles and parameters.</p>
+                        <a href="ai-art.html" class="tool-button">Try Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Powerful Features</h2>
+                    <p>Everything you need to create professional-quality AI-generated media</p>
+                </div>
                 
-                // Simulate progress
-                let progress = 0;
-                const progressText = loading.querySelector('.progress-text');
-                const interval = setInterval(() => {
-                    progress += Math.random() * 10;
-                    if (progress > 100) progress = 100;
-                    progressText.textContent = `Generating ${progress.toFixed(0)}%`;
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                        </div>
+                        <h3>Easy to Use</h3>
+                        <p>Intuitive interface that makes AI generation accessible to everyone, regardless of technical skill.</p>
+                    </div>
                     
-                    if (progress === 100) {
-                        clearInterval(interval);
-                        setTimeout(() => {
-                            loading.style.display = 'none';
-                            
-                            // Show result (in a real app this would be the actual generated media)
-                            if (outputMedia) {
-                                outputMedia.style.display = 'block';
-                                
-                                // For demo purposes, use a placeholder
-                                if (outputMedia.classList.contains('output-image')) {
-                                    outputMedia.src = 'https://source.unsplash.com/random/1024x1024/?fantasy,city';
-                                } else {
-                                    outputMedia.src = 'https://samplelib.com/lib/preview/mp4/sample-5s.mp4';
-                                }
-                            }
-                        }, 500);
-                    }
-                }, 300);
-            });
-        });
-        
-        // Light/dark mode toggle
-        const modeToggle = document.querySelector('.mode-toggle');
-        modeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                        </div>
+                        <h3>Fast Generation</h3>
+                        <p>Our optimized AI models deliver results in seconds, not minutes, so you can iterate quickly.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <h3>Community</h3>
+                        <p>Join thousands of creators sharing and collaborating in our active community.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2v4"></path>
+                                <path d="m16.24 7.76 2.83-2.83"></path>
+                                <path d="M18 12h4"></path>
+                                <path d="m16.24 16.24 2.83 2.83"></path>
+                                <path d="M12 18v4"></path>
+                                <path d="m7.76 16.24-2.83 2.83"></path>
+                                <path d="M6 12h-4"></path>
+                                <path d="m7.76 7.76-2.83-2.83"></path>
+                            </svg>
+                        </div>
+                        <h3>Commercial Use</h3>
+                        <p>All generated content is royalty-free and can be used for commercial projects.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>AI Studio Pro</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                        <li><a href="press.html">Press</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Tools</h3>
+                    <ul>
+                        <li><a href="text-to-image.html">Text to Image</a></li>
+                        <li><a href="image-to-video.html">Image to Video</a></li>
+                        <li><a href="ai-art.html">AI Art Studio</a></li>
+                        <li><a href="api.html">API Access</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="tutorials.html">Tutorials</a></li>
+                        <li><a href="community.html">Community</a></li>
+                        <li><a href="docs.html">Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="copyright.html">Copyright</a></li>
+                        <li><a href="ethics.html">AI Ethics</a></li>
+                    </ul>
+                </div>
+            </div>
             
-            if (document.body.classList.contains('light-mode')) {
-                modeToggle.innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    Dark Mode
-                `;
-            } else {
-                modeToggle.innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                    Light Mode
-                `;
-            }
-        });
-    </script>
+            <div class="copyright">
+                <p>&copy; 2023 AI Studio Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
